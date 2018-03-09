@@ -1,0 +1,97 @@
+Activity 2:
+1. A Deck is a class that contains Card classes.
+2. There are 2 cards in the deck. The rest of the array values are truncated.
+3.
+String [] ranks = new String[] {"two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king", "ace", "two", "three" ... "two", "three" ... "king", "ace"};
+String [] suits = new String[] {"clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "clubs", "diamonds", "diamonds" ... "hearts", "hearts" ... "spades", "spades"};
+int [] pointValues = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 11, 2, 3 ... 2, 3 ... 10, 11};
+4. Yes. If there the order of the elements in the 3 arrays don't match up, cards will be created with the wrong pointValues, suits, and ranks.
+
+Activity 3:
+1.
+public static String flip() {
+	int r = (int)(Math.random()*3);
+	if (r == 0) {
+		return "tails";
+	} else {
+		return "heads";
+	}
+}
+2.
+public static boolean arePermutations(int[] a, int[] b) {
+	if (a.length != b.length)
+		return false;
+	boolean [] marked = new boolean[b.length];
+	boolean matched;
+	for (int i=0; i<marked.length; i++) {
+		marked[i] = false;
+	}
+	for (int i=0; i<a.length; i++) {
+		matched = false;
+		for (int ii=0; ii<b.length; ii++) {
+			if (marked[ii] == false && i == ii && matched == false) {
+				marked[ii] = true;
+				matched = true;
+			}
+		}
+		if (matched == false) {
+			return false;
+		}
+	}
+	return true;
+}
+3. 1, 2, 2, 1
+
+Activity 6:
+1. 6C, 5C
+2. Yes. Because only J,Q, and K are taken out in an odd number (3), and others are taken out in an even number (2), and there are exactly 4 sets of the 3 cards J,Q and K, if there are 3 cards they must be J,Q and K.
+3. Yes. If a certian play is chosen that invalidates quite a few possible future plays, that would be a bad play. Verses if a specific play can create possibilities for future plays, that would be a good move.
+
+Activity 7:
+1. A Deck class deck and a Card array of a specific length cards.
+2.
+public boolean isValidMove(Card card1, Card card2) {
+	if (card1.pointValue() + card2.pointValue() == 11) {
+		return true;
+	}
+	return false;
+}
+public boolean isFace(Card card) {
+	if (card.rank().charAt(0) == 'J' || card.rank().charAt(0) == 'Q' || card.rank().charAt(0) == 'K') {
+		return true;
+	}
+	return false;
+}
+public boolean isValidMove(Card card1, Card card2, Card card3) {
+	if (isFace(card1) && isFace(card2) && isFace(card3)) {
+		if (card1 != card2 && card2 != card3 && card3 != card1) {
+			return true;
+		}
+	}
+	return false;
+}
+3. No. A lot of the functions that enforce the game rules are not yet implemented
+4a. Constructor and newGame methods
+4b. isLegal, anotherPlayIsPossible
+4c. 0, 1, 3, 6, 7, null, null, null
+4d.
+public static void printCards(ElevensBoard board) {
+	List<Integer> cIndexes = board.cardIndexes();
+	for (int i=0; i<cIndexes.size(); i++) {
+		if (cIndexes.get(i) == null) {
+			break;
+		}
+		System.out.println(cards[cIndexes.get(i)]);
+	}
+}
+4e. Both of them. The isLegal method must make sure that the player did not click on a null card. The anotherPlayIsPossible method must find out what cards are left before comparing.
+
+Activity 8:
+1. They are all boards and have the same methods, but the methods work differently.
+2. The constructor in the ElevensBoard is called instead of the Board one, and that is where the non-constant assignments happen.
+3. The file Board.java's abstract methods do not cover all the differences between Elevens, Tens, and Thirteens. This is because there are a few different methods in Elevens, Tens, and Thirteens (like comparing quartets of a certain card in Tens, and JQK in elevens) that must be implemented in their individual classes instead of as an abstract method in the superclass.
+
+Activity 9:
+1. Because it does the same thing in all three games, it can be implemented.
+2. Because each deck of each card game is different, and each game has different rules, it cannot be abstracted in the abstract superclass.
+3. It would be able to allow these methods to be called, but the main problem is that an abstract class can contain concrete defined methods which can be used in its derived classes.
